@@ -1,0 +1,57 @@
+pb: "Pedal Board" {
+  cbfh: "Dunlop Crybaby\nFrom Hell" {}
+  polytune3: "TC\nPolytune 3" {}
+  mls: "MIDI Loop Switch" {
+    ts: "Ibanez\nTube Screamer" {}
+  }
+  mc: "Luminite\nGraviton 2\nMIDI controller" {}
+  cbfh -> polytune3 -> mls
+}
+
+msp: "Mesa Boogie Studio Preamp" {
+  A: "Channel A" {}
+  B: "Channel B" {}
+  loop: "Effects Loop\n(Mono)" {}
+}
+pb.mls -> msp
+dbx166xl: "DBX 166XL Comp./Gate" {
+  A: "Channel A" {}
+  B: "Channel B" {}
+}
+msp.loop -> dbx166xl.A
+dbx166xl.A -> msp.loop
+
+mixer: "Saturnworks\nMixer / Splitter" {}
+msp.A -> mixer
+msp.B -> mixer
+
+mpx1: "Lexicon MPX1 Effects" {
+  A: "Channel A" {}
+  B: "Channel B" {}
+}
+mixer -> mpx1.A: "Preamp\nSplit A" {}
+mixer -> mpx1.B: "Preamp\nSplit B" {}
+mpx1.A -> mixer
+mpx1.B -> mixer
+
+ditto: "TC Ditto Stereo\nLooper" {}
+mixer -> ditto: "Stereo\nMix L"
+mixer -> ditto: "Stereo\nMix R"
+
+m2020: "Mesa Boogie 20:20 Power Amp" {
+  A: "Channel A" {}
+  B: "Channel B" {}
+}
+ditto -> m2020.A
+ditto -> m2020.B
+
+cab: "Speaker Cabinet" {
+  A: "Celestion\nG10\nGreenback" {
+    shape: "circle"
+  }
+  B: "Celestion\nG10\nGreenback" {
+    shape: "circle"
+  }
+}
+m2020.A -> cab.A
+m2020.B -> cab.B
