@@ -1,3 +1,3 @@
 # amp-diagrams
 
-<img src="amprack.svg" width=700>
+<img src="amprack.svg" width=650>
