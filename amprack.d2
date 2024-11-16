@@ -1,11 +1,23 @@
 pb: "Pedal Board" {
-  cbfh: "Dunlop Crybaby\nFrom Hell" {}
-  polytune3: "TC\nPolytune 3" {}
-  mls: "MIDI Loop Switch" {
+  cbfh: "Dunlop\nCrybaby\nFrom Hell" {}
+  polytune3: "TC\nElectronic\nPolytune 3" {}
+  mc: "Luminite\nGraviton 2\nMIDI controller" {}
+  cbfh -> polytune3 
+}
+
+mls: "Oscillator Devices MIDI Loop Switcher" {
+  1: "Loop 1" {
     ts: "Ibanez\nTube Screamer" {}
   }
-  mc: "Luminite\nGraviton 2\nMIDI controller" {}
-  cbfh -> polytune3 -> mls
+  2: "Loop 2" {
+    wac: "Warm Audio\nCentavo" {}
+  }
+}
+pb.polytune3 -> mls
+pb.mc -> mls: "MIDI" {
+  style: {
+    stroke-dash: 3
+  }
 }
 
 msp: "Mesa Boogie Studio Preamp" {
@@ -13,7 +25,12 @@ msp: "Mesa Boogie Studio Preamp" {
   B: "Channel B" {}
   loop: "Effects Loop\n(Mono)" {}
 }
-pb.mls -> msp
+mls -> msp: "Amp Channel\nSwitching" {
+  style: {
+    stroke-dash: 3
+  }
+}
+mls -> msp
 dbx166xl: "DBX 166XL Comp./Gate" {
   A: "Channel A" {}
   B: "Channel B" {}
@@ -29,12 +46,17 @@ mpx1: "Lexicon MPX1 Effects" {
   A: "Channel A" {}
   B: "Channel B" {}
 }
+mls -> mpx1: "MIDI" {
+  style: {
+    stroke-dash: 3
+  }
+}
 mixer -> mpx1.A: "Preamp\nSplit A" {}
 mixer -> mpx1.B: "Preamp\nSplit B" {}
 mpx1.A -> mixer
 mpx1.B -> mixer
 
-ditto: "TC Ditto Stereo\nLooper" {}
+ditto: "TC Electronic\nDitto\nLooper" {}
 mixer -> ditto: "Stereo\nMix L"
 mixer -> ditto: "Stereo\nMix R"
 
