@@ -35,7 +35,7 @@ mls -> dbx166xl.A
 msp: "Mesa Boogie Studio Preamp" {
   A: "Channel A" {}
   B: "Channel B" {}
-  loop: "FX Loop\nSend" {}
+  Loop: "FX Loop" {}
 }
 mls -> msp: "Amp Channel\nSwitching" {
   style: {
@@ -44,9 +44,19 @@ mls -> msp: "Amp Channel\nSwitching" {
 }
 dbx166xl.A -> msp
 
-mixer: "Saturnworks\nMixer / Splitter" {}
-msp.A -> mixer
-msp.B -> mixer
+mixer: "Saturnworks\nStereo Mixer" {
+  In: "Inputs" {
+    A: "Stereo\nChannel A" {}
+    B: "Stereo\nChannel B" {}
+  }
+  Loop: "Stereo\nFX Loop" {}
+  Mix: "Mixer" {
+    A: "Mix\nOut A" {}
+    B: "Mix\nOut B" {}
+  }
+}
+msp.A -> mixer.In.A
+msp.B -> mixer.In.A
 
 mpx1: "Lexicon MPX1 Effects" {
   A: "Channel A" {}
@@ -57,20 +67,20 @@ mls -> mpx1: "MIDI" {
     stroke-dash: 3
   }
 }
-msp.loop -> mpx1.A
-mpx1.A -> mixer
-mpx1.B -> mixer
+msp.Loop -> mpx1.A: "Send" {}
+mpx1.A -> mixer.In.B
+mpx1.B -> mixer.In.B
 
 ditto: "TC Electronic\nDitto\nLooper" {}
-mixer <-> ditto: "Stereo\nFX Loop"
-mixer <-> ditto: "Stereo\nFX Loop"
+mixer.Loop <-> ditto: "Send"
+mixer.Loop <-> ditto: "Return"
 
 m2020: "Mesa Boogie 20:20 Power Amp" {
   A: "Channel A" {}
   B: "Channel B" {}
 }
-mixer -> m2020.A
-mixer -> m2020.B
+mixer.Mix.A -> m2020.A
+mixer.Mix.A -> m2020.B
 
 cab: "Speaker Cabinet" {
   A: "Celestion\nG10\nGreenback" {
@@ -82,3 +92,7 @@ cab: "Speaker Cabinet" {
 }
 m2020.A -> cab.A
 m2020.B -> cab.B
+
+computer: "Computer" {}
+mixer.Mix.B -> computer
+mixer.Mix.B -> computer
