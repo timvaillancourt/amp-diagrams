@@ -7,10 +7,16 @@ pb: "Pedal Board" {
 
 mls: "Oscillator Devices MIDI Loop Switcher" {
   1: "Loop 1" {
-    ts: "Ibanez\nTube Screamer" {}
+    style: {
+      stroke-dash: 3
+    }
+    ts: "JAM Rattler" {}
   }
   2: "Loop 2" {
-    wac: "Warm Audio\nCentavo" {}
+    style: {
+      stroke-dash: 3
+    }
+    ts: "Ibanez\nTube Screamer" {}
   }
 }
 pb.polytune3 -> mls
@@ -20,23 +26,23 @@ pb.mc -> mls: "MIDI" {
   }
 }
 
+dbx166xl: "DBX 166XL Comp./Gate" {
+  A: "Channel A" {}
+  B: "Channel B" {}
+}
+mls -> dbx166xl.A
+
 msp: "Mesa Boogie Studio Preamp" {
   A: "Channel A" {}
   B: "Channel B" {}
-  loop: "Effects Loop\n(Mono)" {}
+  loop: "FX Loop\nSend" {}
 }
 mls -> msp: "Amp Channel\nSwitching" {
   style: {
     stroke-dash: 3
   }
 }
-mls -> msp
-dbx166xl: "DBX 166XL Comp./Gate" {
-  A: "Channel A" {}
-  B: "Channel B" {}
-}
-msp.loop -> dbx166xl.A
-dbx166xl.A -> msp.loop
+dbx166xl.A -> msp
 
 mixer: "Saturnworks\nMixer / Splitter" {}
 msp.A -> mixer
@@ -51,21 +57,20 @@ mls -> mpx1: "MIDI" {
     stroke-dash: 3
   }
 }
-mixer -> mpx1.A: "Preamp\nSplit A" {}
-mixer -> mpx1.B: "Preamp\nSplit B" {}
+msp.loop -> mpx1.A
 mpx1.A -> mixer
 mpx1.B -> mixer
 
 ditto: "TC Electronic\nDitto\nLooper" {}
-mixer -> ditto: "Stereo\nMix L"
-mixer -> ditto: "Stereo\nMix R"
+mixer <-> ditto: "Stereo\nFX Loop"
+mixer <-> ditto: "Stereo\nFX Loop"
 
 m2020: "Mesa Boogie 20:20 Power Amp" {
   A: "Channel A" {}
   B: "Channel B" {}
 }
-ditto -> m2020.A
-ditto -> m2020.B
+mixer -> m2020.A
+mixer -> m2020.B
 
 cab: "Speaker Cabinet" {
   A: "Celestion\nG10\nGreenback" {
