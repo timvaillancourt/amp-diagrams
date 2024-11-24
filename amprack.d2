@@ -4,7 +4,7 @@ pb: "Pedal Board" {
   ispdm: "ISP\nDecimate\nNoise Gate" {}
   wec: "Wampler\nEgo\nCompressor" {}
   mc: "Luminite\nGraviton 2\nMIDI controller" {}
-  mls: "Oscillator Devices MIDI Loop Switcher" {
+  mls: "Oscillator Devices\nHydra 2E\nMIDI Loop Switcher" {
     1: "Loop 1" {
       style: {
         stroke-dash: 3
@@ -72,8 +72,8 @@ m2020: "Mesa Boogie 20:20 Power Amp" {
 }
 mixer.Mix.A -> m2020.A: "Left"
 mixer.Mix.A -> m2020.B: "Right"
-mixer.Loop -> pb.ditto: "Send"
-pb.ditto -> mixer.Loop: "Return"
+mixer.Loop -> pb.ditto: "TRS\nSend"
+pb.ditto -> mixer.Loop: "TRS\nReturn"
 
 cab: "Speaker Cabinet" {
   A: "Celestion\nG10\nGreenback" {
