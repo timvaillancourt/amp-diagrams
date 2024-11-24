@@ -1,48 +1,42 @@
 pb: "Pedal Board" {
   cbfh: "Dunlop\nCrybaby\nFrom Hell" {}
   polytune3: "TC\nElectronic\nPolytune 3" {}
+  ispdm: "ISP\nDecimate\nNoise Gate" {}
+  wec: "Wampler\nEgo\nCompressor" {}
   mc: "Luminite\nGraviton 2\nMIDI controller" {}
-  cbfh -> polytune3 
-}
-
-mls: "Oscillator Devices MIDI Loop Switcher" {
-  1: "Loop 1" {
+  mls: "Oscillator Devices MIDI Loop Switcher" {
+    1: "Loop 1" {
+      style: {
+        stroke-dash: 3
+      }
+      ts: "JAM\nRattler" {}
+    }
+    2: "Loop 2" {
+      style: {
+        stroke-dash: 3
+      }
+      ts: "Ibanez\nTube Screamer\nMini" {}
+    }
+  }
+  cbfh -> polytune3 -> ispdm -> wec -> mls
+  mc -> mls: "MIDI" {
     style: {
       stroke-dash: 3
     }
-    ts: "JAM Rattler" {}
-  }
-  2: "Loop 2" {
-    style: {
-      stroke-dash: 3
-    }
-    ts: "Ibanez\nTube Screamer" {}
   }
 }
-pb.polytune3 -> mls
-pb.mc -> mls: "MIDI" {
-  style: {
-    stroke-dash: 3
-  }
-}
-
-dbx166xl: "DBX 166XL Comp./Gate" {
-  A: "Channel A" {}
-  B: "Channel B" {}
-}
-mls -> dbx166xl.A
 
 msp: "Mesa Boogie Studio Preamp" {
   A: "Channel A" {}
   B: "Channel B" {}
   Loop: "FX Loop" {}
 }
-mls -> msp: "Amp Channel\nSwitching" {
+pb.mls -> msp: "Amp Channel\nSwitching" {
   style: {
     stroke-dash: 3
   }
 }
-dbx166xl.A -> msp
+pb.mls -> msp
 
 mixer: "Saturnworks\nStereo Mixer" {
   In: "Inputs" {
@@ -62,7 +56,7 @@ mpx1: "Lexicon MPX1 Effects" {
   A: "Channel A" {}
   B: "Channel B" {}
 }
-mls -> mpx1: "MIDI" {
+pb.mls -> mpx1: "MIDI" {
   style: {
     stroke-dash: 3
   }
@@ -72,15 +66,15 @@ mpx1.A -> mixer.In.B
 mpx1.B -> mixer.In.B
 
 ditto: "TC Electronic\nDitto\nLooper" {}
-mixer.Loop <-> ditto: "Send"
-mixer.Loop <-> ditto: "Return"
+mixer.Loop -> ditto: "Send"
+ditto -> mixer.Loop: "Return"
 
 m2020: "Mesa Boogie 20:20 Power Amp" {
   A: "Channel A" {}
   B: "Channel B" {}
 }
-mixer.Mix.A -> m2020.A
-mixer.Mix.A -> m2020.B
+mixer.Mix.A -> m2020.A: "Left"
+mixer.Mix.A -> m2020.B: "Right"
 
 cab: "Speaker Cabinet" {
   A: "Celestion\nG10\nGreenback" {
@@ -90,9 +84,12 @@ cab: "Speaker Cabinet" {
     shape: "circle"
   }
 }
-m2020.A -> cab.A
-m2020.B -> cab.B
+m2020.A -> cab.A: "Left"
+m2020.B -> cab.B: "Right"
 
-computer: "Computer" {}
-mixer.Mix.B -> computer
-mixer.Mix.B -> computer
+clarett: "Focusrite\nClarett\n4Pre" {}
+mixer.Mix.B -> clarett: "Left"
+mixer.Mix.B -> clarett: "Right"
+
+computer: "Computer"
+clarett -> computer: "USB-C"
