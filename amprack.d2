@@ -50,8 +50,8 @@ mixer: "Saturnworks\nStereo Mixer" {
     B: "Mix\nOut B" {}
   }
 }
-msp.A -> mixer.In.A
-msp.B -> mixer.In.A
+msp.A -> mixer.In.A: "Left"
+msp.B -> mixer.In.A: "Right"
 
 mpx1: "Lexicon MPX1 Effects" {
   A: "Channel A" {}
@@ -63,8 +63,8 @@ pb.mls -> mpx1: "MIDI" {
   }
 }
 msp.Loop -> mpx1.A: "Send" {}
-mpx1.A -> mixer.In.B
-mpx1.B -> mixer.In.B
+mpx1.A -> mixer.In.B: "Left"
+mpx1.B -> mixer.In.B: "Right"
 
 m2020: "Mesa Boogie 20:20 Power Amp" {
   A: "Channel A" {}
