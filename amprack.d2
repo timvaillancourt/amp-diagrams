@@ -24,6 +24,7 @@ pb: "Pedal Board" {
       stroke-dash: 3
     }
   }
+  ditto: "TC Electronic\nDitto\nLooper" {}
 }
 
 msp: "Mesa Boogie Studio Preamp" {
@@ -65,16 +66,14 @@ msp.Loop -> mpx1.A: "Send" {}
 mpx1.A -> mixer.In.B
 mpx1.B -> mixer.In.B
 
-ditto: "TC Electronic\nDitto\nLooper" {}
-mixer.Loop -> ditto: "Send"
-ditto -> mixer.Loop: "Return"
-
 m2020: "Mesa Boogie 20:20 Power Amp" {
   A: "Channel A" {}
   B: "Channel B" {}
 }
 mixer.Mix.A -> m2020.A: "Left"
 mixer.Mix.A -> m2020.B: "Right"
+mixer.Loop -> pb.ditto: "Send"
+pb.ditto -> mixer.Loop: "Return"
 
 cab: "Speaker Cabinet" {
   A: "Celestion\nG10\nGreenback" {
