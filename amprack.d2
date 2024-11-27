@@ -1,8 +1,8 @@
 pb: "Pedal Board" {
   cbfh: "Dunlop\nCrybaby\nFrom Hell" {}
-  polytune3: "TC\nElectronic\nPolytune 3" {}
-  ispdm: "ISP\nDecimate\nNoise Gate" {}
-  wec: "Wampler\nEgo\nCompressor" {}
+  polytune3: "TC Electronic\nPolytune 3" {}
+  tcsentry: "TC Electronic\nSentry\nNoise Gate" {}
+  wec: "Wampler\nEgo Compressor" {}
   mc: "Luminite\nGraviton 2\nMIDI controller" {}
   mls: "Oscillator Devices\nHydra 2E\nMIDI Loop Switcher" {
     1: "Loop 1" {
@@ -18,7 +18,7 @@ pb: "Pedal Board" {
       ts: "Ibanez\nTube Screamer\nMini" {}
     }
   }
-  cbfh -> polytune3 -> ispdm -> wec -> mls
+  cbfh -> polytune3 -> tcsentry -> wec -> mls
   mc -> mls: "MIDI" {
     style: {
       stroke-dash: 3
