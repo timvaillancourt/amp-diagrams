@@ -20,7 +20,7 @@ pb: "Pedal Board" {
   }
   ts: "Ibanez\nTube\nScreamer" {}
   cbfh -> polytune3
-  cbfh -> rowinng -> wec -> mls -> ts
+  cbfh -> rowinng -> mls -> ts
   mc -> mls: "MIDI" {
     style: {
       stroke-dash: 3
@@ -40,6 +40,8 @@ pb.mls -> msp: "Amp Channel\nSwitching" {
   }
 }
 pb.ts -> msp
+msp.Loop -> pb.wec: "Send" {}
+pb.wec -> msp.Loop: "Return" {}
 
 mixer: "Saturnworks\nStereo Mixer" {
   In: "Inputs" {
