@@ -64,6 +64,7 @@ mixer: "Saturnworks\nStereo Mixer" {
 msp.A -> mixer.In.A: "Left"
 msp.B -> mixer.In.A: "Right"
 
+jhslbb: "JHS Pedals\nLittle Black\nAmp Box"
 rowin: "Rowin\nNoise Gate" {}
 ss: "Saturnworks\nSplitter" {}
 
@@ -76,8 +77,8 @@ pb.mls -> mpx1: "MIDI" {
     stroke-dash: 3
   }
 }
-msp.Loop -> rowin: "Send" {}
-rowin -> ss
+msp.Loop -> jhslbb: "Send" {}
+jhslbb -> rowin -> ss
 ss -> msp.Loop: "Return" {}
 ss -> mpx1.A: "Split" {}
 mpx1.A -> mixer.In.B: "Left"
@@ -92,6 +93,13 @@ mixer.Mix.A -> m2020.B: "Right"
 mixer.Loop -> pb.ditto: "TRS\nSend"
 pb.ditto -> mixer.Loop: "TRS\nReturn"
 
+wsm: "Weber\nStereo Mass" {
+  1: "Channel 1" {}
+  2: "Channel 2" {}
+}
+m2020.A -> wsm.1
+m2020.B -> wsm.2
+
 cab: "Amsterdam\nAmpworks\nSpeaker Cab" {
   A: "Celestion\nG10\nGreenback" {
     shape: "circle"
@@ -100,8 +108,8 @@ cab: "Amsterdam\nAmpworks\nSpeaker Cab" {
     shape: "circle"
   }
 }
-m2020.A -> cab.A: "Left"
-m2020.B -> cab.B: "Right"
+wsm.1 -> cab.A: "Left"
+wsm.2 -> cab.B: "Right"
 
 clarett: "Focusrite\nClarett\n4Pre" {}
 mixer.Mix.B -> clarett: "Left"
