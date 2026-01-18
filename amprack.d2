@@ -34,6 +34,7 @@ pb: "Pedal Board" {
 guitar -> pb.cbfh
 
 msp: "Mesa Boogie Studio Preamp" {
+  Input: "Input" {}
   A: "Channel A" {}
   B: "Channel B" {}
   Loop: "FX Loop" {}
@@ -48,7 +49,7 @@ pb.mls -> msp: "Amp Reverb\nSwitching" {
     stroke-dash: 3
   }
 }
-pb.wgt -> msp
+pb.wgt -> msp.Input
 
 mixer: "Saturnworks\nStereo Mixer" {
   In: "Inputs" {
