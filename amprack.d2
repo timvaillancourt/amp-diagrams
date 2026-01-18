@@ -1,8 +1,11 @@
+guitar: "Guitar" {
+  shape: "person"
+}
+
 pb: "Pedal Board" {
   cbfh: "Dunlop\nCrybaby\nFrom Hell" {}
   polytune3: "TC Electronic\nPolytune 3\nTuner" {}
-  rowinng: "Rowin\nNoise Gate" {}
-  wec: "Wampler\nEgo\nCompressor" {}
+  we76c: "Wampler\nEgo 76\nCompressor" {}
   mc: "Luminite\nGraviton 2\nMIDI controller" {}
   mls: "Oscillator Devices\nHYDRA2E MIDI\nSwitcher" {
     1: "Loop 1" {
@@ -15,12 +18,12 @@ pb: "Pedal Board" {
       style: {
         stroke-dash: 3
       }
-      ts: "JAM\nRed Muck" {}
+      ts: "Dr. No Effects\nNecrofuzzicon" {}
     }
   }
-  ts: "Ibanez\nTube\nScreamer" {}
+  wgt: "Wampler\nGermanium\nTumnus" {}
   cbfh -> polytune3
-  cbfh -> rowinng -> mls -> ts
+  cbfh -> we76c -> mls -> wgt
   mc -> mls: "MIDI" {
     style: {
       stroke-dash: 3
@@ -28,6 +31,7 @@ pb: "Pedal Board" {
   }
   ditto: "TC Electronic\nDitto\nLooper" {}
 }
+guitar -> pb.cbfh
 
 msp: "Mesa Boogie Studio Preamp" {
   A: "Channel A" {}
@@ -39,9 +43,12 @@ pb.mls -> msp: "Amp Channel\nSwitching" {
     stroke-dash: 3
   }
 }
-pb.ts -> msp
-msp.Loop -> pb.wec: "Send" {}
-pb.wec -> msp.Loop: "Return" {}
+pb.mls -> msp: "Amp Reverb\nSwitching" {
+  style: {
+    stroke-dash: 3
+  }
+}
+pb.wgt -> msp
 
 mixer: "Saturnworks\nStereo Mixer" {
   In: "Inputs" {
@@ -57,6 +64,9 @@ mixer: "Saturnworks\nStereo Mixer" {
 msp.A -> mixer.In.A: "Left"
 msp.B -> mixer.In.A: "Right"
 
+rowin: "Rowin\nNoise Gate" {}
+ss: "Saturnworks\nSplitter" {}
+
 mpx1: "Lexicon MPX1 Effects" {
   A: "Channel A" {}
   B: "Channel B" {}
@@ -66,7 +76,10 @@ pb.mls -> mpx1: "MIDI" {
     stroke-dash: 3
   }
 }
-msp.Loop -> mpx1.A: "Send" {}
+msp.Loop -> rowin: "Send" {}
+rowin -> ss
+ss -> msp.Loop: "Return" {}
+ss -> mpx1.A: "Split" {}
 mpx1.A -> mixer.In.B: "Left"
 mpx1.B -> mixer.In.B: "Right"
 
